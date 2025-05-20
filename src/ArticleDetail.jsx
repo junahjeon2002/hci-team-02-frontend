@@ -56,9 +56,16 @@ const ArticleDetail = () => {
       >
         &lt; 비유 읽기
       </div>
+      {/* "톡 읽기" 섹션 추가 */}
+      <div
+        style={{ fontWeight: 'bold', marginBottom: '10px', cursor: 'pointer' }}
+        onClick={() => navigate(`/article/${id}/talk`)}
+      >
+        &lt; 톡 읽기
+      </div>
       <div>
         {article.content.map((paragraph, index) => (
-          <p key={index} style={{ marginBottom: '10px', lineHeight: '1.5' }}>
+          <p key={index} style={{ marginBottom: '10px', lineHeight: '1.5', color: (index === 2 || index === 4) ? '#888' : '#000' }}>
             {paragraph}
           </p>
         ))}

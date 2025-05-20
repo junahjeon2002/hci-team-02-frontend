@@ -46,7 +46,7 @@ const NewsFeed = () => {
             <span key={index} style={{ textDecoration: 'underline', color: 'blue', cursor: 'pointer' }}>
               {/* "트럼프" 키워드 클릭 시 비유 읽기 페이지로 이동 */}
               {kw === '트럼프' ? (
-                <Link to={`/article/${kw}/analogy`} style={{ textDecoration: 'underline', color: 'blue' }}>{kw}</Link>
+                <Link to={`/article/${kw}`} style={{ textDecoration: 'underline', color: 'blue' }}>{kw}</Link>
               ) : (
                 kw
               )}
@@ -56,43 +56,45 @@ const NewsFeed = () => {
       </div>
       <div>
         {articles.map((article, index) => (
-          <div key={index} style={{ border: '1px solid #000', padding: '10px', marginBottom: '10px', display: 'flex' }}>
-            <div style={{ marginRight: '10px', textAlign: 'center' }}>
-              <div>{article.media}</div>
-              <div style={{ display: 'flex', marginTop: '5px' }}>
-                {article.indicator === 'blue' && (
-                  <>
-                    <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
-                  </>
-                )}
-                 {article.indicator === 'red' && (
-                  <>
-                    <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
-                    <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
-                  </>
-                )}
-                {article.indicator === 'warning' && (
-                    <div style={{ color: 'red', fontSize: '20px' }}>⚠️</div> // 경고 아이콘 예시
-                )}
+          <Link key={index} to={`/article/${article.title}`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ border: '1px solid #000', padding: '10px', marginBottom: '10px', display: 'flex' }}>
+              <div style={{ marginRight: '10px', textAlign: 'center' }}>
+                <div>{article.media}</div>
+                <div style={{ display: 'flex', marginTop: '5px' }}>
+                  {article.indicator === 'blue' && (
+                    <>
+                      <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'blue', margin: '0 1px' }}></div>
+                    </>
+                  )}
+                   {article.indicator === 'red' && (
+                    <>
+                      <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
+                      <div style={{ width: '10px', height: '10px', background: 'red', margin: '0 1px' }}></div>
+                    </>
+                  )}
+                  {article.indicator === 'warning' && (
+                      <div style={{ color: 'red', fontSize: '20px' }}>⚠️</div> // 경고 아이콘 예시
+                  )}
+                </div>
               </div>
+              <div style={{ flexGrow: 1 }}>
+                <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{article.title}</div>
+                <div>{article.preview}</div>
+              </div>
+              {article.indicator === 'warning' && (
+                   <div style={{ marginLeft: '10px', textAlign: 'center', fontSize: '10px', color: 'red' }}>
+                      <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '50px' }} /> {/* public 폴더 경로 사용 */}
+                   </div>
+              )}
             </div>
-            <div style={{ flexGrow: 1 }}>
-              <div style={{ fontWeight: 'bold', marginBottom: '5px' }}>{article.title}</div>
-              <div>{article.preview}</div>
-            </div>
-            {article.indicator === 'warning' && (
-                 <div style={{ marginLeft: '10px', textAlign: 'center', fontSize: '10px', color: 'red' }}>
-                    <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '50px' }} /> {/* public 폴더 경로 사용 */}
-                 </div>
-            )}
-          </div>
+          </Link>
         ))}
       </div>
     </div>

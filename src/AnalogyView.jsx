@@ -52,9 +52,14 @@ const AnalogyView = () => {
     navigate(`/article/${id}`); // 기사 상세 페이지 경로로 이동
   };
 
-  // "돌아가기" 클릭 시 메인 페이지로 이동 (새로 추가)
+  // "돌아가기" 클릭 시 메인 페이지로 이동
   const handleGoBackToMain = () => {
     navigate('/'); // 메인 페이지 경로로 이동
+  };
+
+  // "톡 읽기" 클릭 시 톡 읽기 페이지로 이동 (새로 추가)
+  const handleGoToTalk = () => {
+    navigate(`/article/${id}/talk`); // 톡 읽기 페이지 경로로 이동
   };
 
   return (
@@ -76,6 +81,10 @@ const AnalogyView = () => {
          {/* "비유 읽기" 제목을 "원문 읽기" 버튼으로 변경 */}
          <button onClick={handleGoToOriginal} style={{ fontWeight: 'bold', border: 'none', background: 'none', color: 'black', cursor: 'pointer' }}>
            &lt; 원문 읽기
+         </button>
+         {/* 톡 읽기 버튼 추가 */}
+         <button onClick={handleGoToTalk} style={{ fontWeight: 'bold', border: 'none', background: 'none', color: 'black', cursor: 'pointer', marginLeft: '10px' }}>
+            &lt; 톡 읽기
          </button>
          <div style={{ color: 'red', fontSize: '12px' }}>{analogyData.warning}</div> {/* 경고 문구 */}
       </div>
