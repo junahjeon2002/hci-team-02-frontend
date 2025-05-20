@@ -1,11 +1,11 @@
 import React from 'react';
-import { useNavigate, useParams } from 'react-router-dom'; // Outlet 제거
+import { useNavigate, useParams } from 'react-router-dom';
 
-const ArticleDetail = () => {
-  const navigate = useNavigate(); // useNavigate 훅 사용
+const OriginalArticleView = () => {
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  // 샘플 기사 데이터 (이미지 내용을 바탕으로 작성)
+  // 샘플 기사 데이터 (ArticleDetail과 동일하게 사용)
   const article = {
     title: "「트럼프, 무역 협정 발표 예고...중국 겨냥한 선제 압박?」",
     author: "xx 기자",
@@ -24,11 +24,6 @@ const ArticleDetail = () => {
   // "돌아가기" 클릭 시 메인 페이지로 이동
   const handleGoBackToMain = () => {
     navigate('/'); // 메인 페이지 경로로 이동
-  };
-
-  // "비유 읽기" 섹션 클릭 시 비유 읽기 페이지로 이동 (경로 유지)
-  const handleGoToAnalogy = () => {
-    navigate(`/article/${id}/analogy`);
   };
 
   return (
@@ -50,19 +45,15 @@ const ArticleDetail = () => {
       </div>
       <hr />
       <div>
-        {/* 기사 내용을 문장 단위로 분리하여 렌더링 */}
-        {article.content.join(' ').split(/(?<=[.?!])\s+/).map((sentence, index) => (
-          <p key={index} style={{ marginBottom: '10px', lineHeight: '1.5', color: (index === 2 || index === 4 || index === 8) ? '#000' : '#ccc', fontWeight: (index === 2 || index === 4 || index === 8) ? 'bold' : 'normal' }}>
-            {sentence}
+        {/* 기사 내용을 문단 단위로 렌더링 (일반 스타일) */}
+        {article.content.map((paragraph, index) => (
+          <p key={index} style={{ marginBottom: '10px', lineHeight: '1.5', color: '#000', fontWeight: 'normal' }}>
+            {paragraph}
           </p>
         ))}
       </div>
-
-      {/* 중첩 라우트가 렌더링될 위치 - Outlet 제거 */}
-      {/* <Outlet /> */}
-
     </div>
   );
 };
 
-export default ArticleDetail; 
+export default OriginalArticleView; 

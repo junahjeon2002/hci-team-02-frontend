@@ -49,7 +49,7 @@ const AnalogyView = () => {
 
   // "원문 읽기" 클릭 시 기사 상세 페이지로 이동
   const handleGoToOriginal = () => {
-    navigate(`/article/${id}`); // 기사 상세 페이지 경로로 이동
+    navigate(`/article/${id}/original`); // 원문 읽기 페이지 경로로 이동
   };
 
   // "돌아가기" 클릭 시 메인 페이지로 이동
@@ -63,7 +63,7 @@ const AnalogyView = () => {
   };
 
   return (
-    <div style={{ padding: '10px', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
+    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
       {/* 상단 돌아가기 및 언론사 버튼 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
         <button onClick={handleGoBackToMain} style={{ padding: '5px 10px', border: '1px solid #000', background: '#fff', cursor: 'pointer' }}>

@@ -47,7 +47,7 @@ const TalkView = () => {
 
   // 기사 상세 페이지로 이동 (새로운 이미지에는 없지만 필요하다면 추가)
   const handleGoToOriginal = () => {
-    navigate(`/article/${id}`);
+    navigate(`/article/${id}/original`);
   };
 
     // 비유 읽기 페이지로 이동 (새로운 이미지에는 없지만 필요하다면 추가)
@@ -56,7 +56,7 @@ const TalkView = () => {
     };
 
   return (
-    <div style={{ padding: '10px', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
+    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
       {/* 상단 돌아가기 및 언론사 버튼 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
         <button onClick={handleGoBackToMain} style={{ padding: '5px 10px', border: '1px solid #000', background: '#fff', cursor: 'pointer' }}>
@@ -98,15 +98,15 @@ const TalkView = () => {
           {/* 여기에 사용자 입력 필드나 버튼 추가 가능 */}
       </div>
 
-       {/* 하단 원문 읽기/비유 읽기 버튼 (이미지에는 없지만 필요에 따라 추가) */}
-       {/* <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-around'}}> */}
-       {/* <button onClick={handleGoToOriginal} style={{ padding: '5px 10px', border: 'none', background: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer'}}> */}
-       {/* < 원문 읽기 */}
-       {/* </button> */}
-       {/* <button onClick={handleGoToAnalogy} style={{ padding: '5px 10px', border: 'none', background: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer'}}> */}
-       {/* < 비유 읽기 */}
-       {/* </button> */}
-       {/* </div> */}
+       {/* 하단 원문 읽기/비유 읽기 버튼 */}
+       <div style={{ marginTop: '20px', display: 'flex', justifyContent: 'space-around'}}>
+          <button onClick={handleGoToOriginal} style={{ padding: '5px 10px', border: 'none', background: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer'}}>
+           &lt; 원문 읽기
+          </button>
+          <button onClick={handleGoToAnalogy} style={{ padding: '5px 10px', border: 'none', background: 'none', color: 'blue', textDecoration: 'underline', cursor: 'pointer'}}>
+            &lt; 비유 읽기
+          </button>
+        </div>
 
     </div>
   );
