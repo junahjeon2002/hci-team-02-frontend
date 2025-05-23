@@ -27,10 +27,12 @@ export default function Analog() {
        <hr className="analog-divider" />
       {/* Button row */}
       <div className="analog-btnrow">
-        <button className="analog-btn">
-          <img src="/talkbox.svg" alt="톡" className="analog-btnicon" />
-          톡 보기
-        </button>
+        <Link to="/article/:id/talk" style={{ textDecoration: 'none' }}>
+          <button className="analog-btn">
+            <img src="/talkbox.svg" alt="톡" className="analog-btnicon" />
+            톡 보기
+          </button>
+        </Link>
         <Link to="/article/:id/original" style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
             원문보기
