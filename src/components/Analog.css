@@ -1,0 +1,129 @@
+.analog-card {
+  max-width: 400px;
+  margin: 40px auto;
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  padding: 28px;
+  font-family: 'Pretendard', sans-serif;
+  position: relative;
+}
+.analog-topbar {
+    position: relative;
+    height: 40px; /* 로고 높이 + 여유 */
+    margin-bottom: 10px;
+  }
+  .analog-homeicon {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 28px;
+    height: 28px;
+  }
+  .analog-vewslogo {
+    display: block;
+    margin: 0 auto;
+    height: 40px;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+  }
+  .analog-title {
+  font-weight: 700;
+  font-size: 22px;
+  margin: 18px 0 4px 0;
+  line-height: 1.3;
+  text-align: left;
+}
+.analog-warning {
+  color: #e23d3d;
+  font-weight: 600;
+  font-size: 13px;
+  margin: 8px 0 0 0;
+  text-align: right;
+  margin-bottom: 20px; 
+}
+.analog-inforow {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  color: #888;
+  margin: 18px 0 0 0;
+  gap: 8px;
+}
+.analog-reporter {
+  font-weight: 500;
+}
+.analog-dates {
+  display: flex;
+  gap: 8px;
+  margin-top: 2px;
+}
+.analog-date {
+  color: #bbb;
+  font-size: 10px;
+  margin-right: 8px;
+}
+.analog-logo {
+  height: 22px;
+  margin-left: auto;
+}
+.analog-divider {
+    border: none;
+    border-top: 1px solid #e0e0e0;
+    margin: 18px 0 0 0; /* 위쪽 여백 조절 */
+}
+.analog-btnrow {
+  display: flex;
+  gap: 12px;
+  margin: 18px 0 0 0;
+  justify-content: space-between;
+  width: 100%;
+}
+.analog-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f5f6fa;
+  border: none;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-weight: 500;
+  font-size: 15px;
+  color: #3b6eea;
+  cursor: pointer;
+}
+.analog-btnicon {
+  width: 20px;
+}
+.analog-article {
+  margin: 22px 0 0 0;
+  font-size: 16px;
+  line-height: 1.7;
+  color: #222;
+  word-break: keep-all;
+  text-align: left;
+}
+.analog-highlight-blue {
+  color: #3b6eea;
+  font-weight: 600;
+}
+.analog-highlight-purple {
+  color: #7b4fe9;
+  font-weight: 600;
+}
+.analog-highlight-pink {
+  color: #e23d8f;
+  font-weight: 600;
+}
+.analog-highlight-gray {
+  color: #888;
+  font-weight: 600;
+}
+.analog-link {
+  color: #3b6eea;
+  text-decoration: underline;
+  cursor: pointer;
+}
