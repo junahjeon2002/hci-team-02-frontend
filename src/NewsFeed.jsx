@@ -167,14 +167,14 @@ const NewsFeed = () => {
 
               {/* 가짜뉴스 경고 (조건부 렌더링) */}
               {article.indicator === 'warning' && (
-                <div style={{ position: 'absolute', bottom: '10px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
+                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
                   <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '30px' }} /> {/* 가짜뉴스 경고 이미지 */}
                 </div>
               )}
 
               {/* 편향 경고 (조건부 렌더링) */}
               {article.indicator === 'bias' && (
-                <div style={{ position: 'absolute', bottom: '10px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
+                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
                   <img src="/편향 경고.png" alt="편향 경고" style={{ width: '30px' }} /> {/* 편향 경고 이미지 */}
                 </div>
               )}
