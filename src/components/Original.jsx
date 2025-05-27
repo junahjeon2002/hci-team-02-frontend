@@ -52,14 +52,14 @@ export default function Analog() {
        </div>
        <hr className="analog-divider" />
       {/* Button row */}
-      <Link to="/article/:id/analogy" style={{ textDecoration: 'none' }}>
-        <div className="analog-btnrow">
+      <div className="analog-btnrow">
+        <Link to="/article/:id/analogy" style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
             <img src="/analog.svg" alt="비유" className="analog-btnicon" />
             비유 보기
           </button>
-        </div>
-      </Link>
+        </Link>
+      </div>
       {/* Article Container for relative positioning */}
       <div style={{ position: 'relative' }}>
         {/* Article */}

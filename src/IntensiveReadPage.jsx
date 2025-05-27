@@ -35,7 +35,7 @@ const IntensiveReadPage = () => {
         </span>
         {/* VIEWS 로고 - 중앙에 배치 */}
         <div style={{ flexGrow: 1, textAlign: 'center' }}>
-           <img src="/VEWS 로고.png" alt="VIEWS Logo" style={{ width: '50px' }} />
+           <img src="/VEWSLogoWhite.svg" alt="VIEWS Logo" style={{ height: '40px' }} />
         </div>
         {/* 오른쪽 빈 공간 (홈 아이콘과 동일한 너비) */}
         <div style={{ width: '24px' }}></div>
