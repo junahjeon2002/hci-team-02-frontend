@@ -1,13 +1,34 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
 import { Link } from 'react-router-dom'; // Link import
-import axios from "axios"
+import axios from 'axios'; // axios import
 
 const NewsFeed = () => {
   const [isKeywordsBoxOpen, setIsKeywordsBoxOpen] = useState(true); // 키워드 상자 상태 관리
   const [selectedCategory, setSelectedCategory] = useState('정치'); // 선택된 카테고리 상태 추가
   const [articles, setArticles] = useState([]); // 백엔드에서 받아올 기사 목록
+  const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
+
+  useEffect(() => {
+    // API 호출 함수
+    const fetchKeywords = async () => {
+      try {
+        const response = await axios.post('http://3.36.74.61:8080/article/keywords', {}, {
+          headers: {
+          }
+        });
+        // API 응답에서 keywords 배열을 추출하여 상태 업데이트
+        setKeywords(response.data.keywords);
+      } catch (error) {
+        console.error('Error fetching keywords:', error);
+        // 에러 발생 시 기본 키워드를 설정하거나 사용자에게 알림
+        // setKeywords([]); // 에러 시 빈 배열 또는 기본 키워드 설정
+      }
+    };
+
+    fetchKeywords();
+  }, []); // 컴포넌트가 처음 마운트될 때만 실행
 
   useEffect(() => {
     axios.get("http://3.36.74.61:8080/article/page1")
@@ -22,9 +43,9 @@ const NewsFeed = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
 
-  // 샘플 데이터
+  // 샘플 데이터 (API 호출 성공 시 이 데이터는 사용되지 않음)
   const categories = ["정치", "경제", "사회", "연예", "스포츠", "기타"];
-  const keywords = ["트럼프", "대선", "화재", "전쟁", "커피"]; // "커피" 키워드 추가
+  //const keywords = ["트럼프", "대선", "화재", "전쟁", "커피"]; // "커피" 키워드 추가
   // const articles = [
   //   {
   //     media: "한겨레",
@@ -111,9 +132,10 @@ const NewsFeed = () => {
         {!isKeywordsBoxOpen && (
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontWeight: 'bold' }}>오늘의 키워드</div>
         )}
+        {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.map((kw, index) => (
+             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{
@@ -125,17 +147,14 @@ const NewsFeed = () => {
                    border: '1px solid #000', // 얇은 검은색 테두리 추가
                    padding: '3px 6px', // 테두리와 글씨 사이 간격 추가
                    borderRadius: '15px', // 동그라미 모양을 만들기 위해 충분히 큰 값 설정
-                   // 인덱스에 따라 임의의 위치 지정 (사진 및 5개 키워드 고려)
-                   top: index === 0 ? '10px' : index === 1 ? '1px' : index === 2 ? '40px' : index === 3 ? '30px' : '10px', // 트럼프, 대선, 화재, 전쟁, 커피 순서대로 1, 2번째 줄 배치
+                   // TODO: API 응답 데이터에 위치 정보가 없다면, 위치 지정 로직 수정 필요
+                   top: index === 0 ? '10px' : index === 1 ? '1px' : index === 2 ? '40px' : index === 3 ? '30px' : '10px', // 인덱스에 따라 임의의 위치 지정 (사진 및 5개 키워드 고려)
                    left: index === 0 ? '1px' : index === 1 ? '80px' : index === 2 ? '50px' : index === 3 ? '150px' : '200px', // 위치 간격 조정
                  }}
                >
                  {/* "트럼프" 키워드 클릭 시 집중 읽기 페이지로 이동, 다른 키워드는 현재 기능 없음 */}
-                 {kw === '트럼프' ? (
-                   <Link to={`/article/${kw}`} style={{ color: '#000', textDecoration: 'none' }}>{kw}</Link>
-                 ) : (
-                   kw
-                 )}
+                 {/* TODO: 키워드 클릭 시 동작 정의 필요 */}
+                 {item.keyword} {/* item.keyword로 키워드 텍스트 표시 */}
                </span>
              ))}
            </div>
@@ -174,6 +193,20 @@ const NewsFeed = () => {
                 <div style={{ fontWeight: 'bold', fontSize: '0.75em', marginBottom: '3px' }}>{article.title}</div>
                 <div style={{ fontSize: '0.5em', color: '#777' }}>{article.edited_at?.slice(0, 10)} {article.author.name} 기자</div>
               </div>
+
+              {/* 가짜뉴스 경고 (조건부 렌더링) */}
+              {article.indicator === 'warning' && (
+                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
+                  <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '30px' }} /> {/* 가짜뉴스 경고 이미지 */}
+                </div>
+              )}
+
+              {/* 편향 경고 (조건부 렌더링) */}
+              {article.indicator === 'bias' && (
+                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
+                  <img src="/편향 경고.png" alt="편향 경고" style={{ width: '30px' }} /> {/* 편향 경고 이미지 */}
+                </div>
+              )}
             </div>
           </Link>
         ))}
