@@ -1,12 +1,23 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
 import { Link } from 'react-router-dom'; // Link import
+import axios from "axios"
 
 const NewsFeed = () => {
   const [isKeywordsBoxOpen, setIsKeywordsBoxOpen] = useState(true); // 키워드 상자 상태 관리
   const [selectedCategory, setSelectedCategory] = useState('정치'); // 선택된 카테고리 상태 추가
+  const [articles, setArticles] = useState([]); // 백엔드에서 받아올 기사 목록
 
+  useEffect(() => {
+    axios.get("http://3.36.74.61:8080/article/page1")
+      .then((res) => {
+        setArticles(res.data); // 받아온 기사 저장
+      })
+      .catch((err) => {
+        console.error("Failed to fetch articles:", err);
+      });
+  }, []);
   const toggleKeywordsBox = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
@@ -14,79 +25,79 @@ const NewsFeed = () => {
   // 샘플 데이터
   const categories = ["정치", "경제", "사회", "연예", "스포츠", "기타"];
   const keywords = ["트럼프", "대선", "화재", "전쟁", "커피"]; // "커피" 키워드 추가
-  const articles = [
-    {
-      media: "한겨레",
-      indicator: "normal",
-      title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-      preview: "",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "normal",
-      title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-      preview: "",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "bias",
-      title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-      preview: "",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "warning",
-      title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-      preview: "",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "bias",
-      title: "기사 제목 5",
-      preview: "기사 내용 프리뷰 5",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "normal",
-      title: "기사 제목 6",
-      preview: "기사 내용 프리뷰 6",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "warning",
-      title: "기사 제목 7",
-      preview: "기사 내용 프리뷰 7",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-    {
-      media: "한겨레",
-      indicator: "normal",
-      title: "기사 제목 8",
-      preview: "기사 내용 프리뷰 8",
-      date: "2025.05.15",
-      reporter: "김은형기자"
-    },
-  ];
+  // const articles = [
+  //   {
+  //     media: "한겨레",
+  //     indicator: "normal",
+  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
+  //     preview: "",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "normal",
+  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
+  //     preview: "",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "bias",
+  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
+  //     preview: "",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "warning",
+  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
+  //     preview: "",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "bias",
+  //     title: "기사 제목 5",
+  //     preview: "기사 내용 프리뷰 5",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "normal",
+  //     title: "기사 제목 6",
+  //     preview: "기사 내용 프리뷰 6",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "warning",
+  //     title: "기사 제목 7",
+  //     preview: "기사 내용 프리뷰 7",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  //   {
+  //     media: "한겨레",
+  //     indicator: "normal",
+  //     title: "기사 제목 8",
+  //     preview: "기사 내용 프리뷰 8",
+  //     date: "2025.05.15",
+  //     reporter: "김은형기자"
+  //   },
+  // ];
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
 
   return (
-    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
+    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '95%', margin: 'auto' }}>
       <img src="/VEWS 로고.png" alt="VIEWS Logo" style={{ maxWidth: '100px' }} /> {/* public 폴더 경로 사용 */}
       <hr />
       {/* 이미지와 같은 스타일로 키워드 섹션 배치 및 디자인 수정 */}
@@ -152,32 +163,17 @@ const NewsFeed = () => {
       </div>
       <div>
         {articles.map((article, index) => (
-          <Link key={index} to={`/article/${article.title}/analogy`} style={{ textDecoration: 'none', color: 'inherit' }}>
-            <div style={{ border: '1px solid #ccc', padding: '15px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', position: 'relative' }}> {/* position: relative 추가 */}
-              {/* 왼쪽 섹션: 로고와 지표 */}
+          <Link key={index} to={`/article/${article.id}/analogy`} style={{ textDecoration: 'none', color: 'inherit' }}>
+            <div style={{ border: '1px solid #ccc', padding: '15px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', position: 'relative' }}>
+              {/* 로고 */}
               <div style={{ marginRight: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
-                <img src="/한겨레.png" alt="한겨레" style={{ width: '60px', marginBottom: '5px' }} /> {/* 언론사 로고 이미지 */}
+                <img src={article.author.press.logo_img_src} alt={article.author.press.name} style={{ width: '60px', marginBottom: '5px' }} />
               </div>
-
-              {/* 오른쪽 섹션: 제목, 날짜, 기자 */}
-              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column' }}>
-                <div style={{ fontWeight: 'bold', fontSize: '0.75em', marginBottom: '3px' }}>{article.title}</div> {/* 기사 제목 */}
-                <div style={{ fontSize: '0.5em', color: '#777' }}>{article.date} {article.reporter}</div> {/* 날짜 및 기자 */}
+              {/* 텍스트 */}
+              <div style={{ flexGrow: 1, display: 'flex', flexDirection: 'column', textAlign: 'left', fontWeight: 'bold' }}>
+                <div style={{ fontWeight: 'bold', fontSize: '0.75em', marginBottom: '3px' }}>{article.title}</div>
+                <div style={{ fontSize: '0.5em', color: '#777' }}>{article.edited_at?.slice(0, 10)} {article.author.name} 기자</div>
               </div>
-
-              {/* 가짜뉴스 경고 (조건부 렌더링) */}
-              {article.indicator === 'warning' && (
-                <div style={{ position: 'absolute', bottom: '10px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
-                  <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '30px' }} /> {/* 가짜뉴스 경고 이미지 */}
-                </div>
-              )}
-
-              {/* 편향 경고 (조건부 렌더링) */}
-              {article.indicator === 'bias' && (
-                <div style={{ position: 'absolute', bottom: '10px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
-                  <img src="/편향 경고.png" alt="편향 경고" style={{ width: '30px' }} /> {/* 편향 경고 이미지 */}
-                </div>
-              )}
             </div>
           </Link>
         ))}

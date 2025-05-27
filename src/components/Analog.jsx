@@ -1,8 +1,9 @@
 import React from "react";
 import "./Analog.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Analog() {
+  const { id } = useParams();
   return (
     <div className="analog-card">
       {/* Top bar */}
@@ -27,13 +28,13 @@ export default function Analog() {
        <hr className="analog-divider" />
       {/* Button row */}
       <div className="analog-btnrow">
-        <Link to="/article/:id/talk" style={{ textDecoration: 'none' }}>
+        <Link to={`/article/${id}/talk`} style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
             <img src="/talkbox.svg" alt="톡" className="analog-btnicon" />
             톡 보기
           </button>
         </Link>
-        <Link to="/article/:id/original" style={{ textDecoration: 'none' }}>
+        <Link to={`/article/${id}/original`} style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
             원문보기
             <img src="/script.svg" alt="원문보기" className="analog-btnicon" />
@@ -41,7 +42,7 @@ export default function Analog() {
         </Link>
       </div>
       {/* Article */}
-      <div className="analog-article">
+      <div className="analog-article-analog">
         옛날 어느 마을에 진실을 전하는 <span className="analog-highlight-blue">'푸른 나팔'</span>이 있었어요.<br/>
         이 나팔은 조용하지만 언제나 바른 소리를 냈고, 마을 사람들은 중요한 소식이 궁금할 땐 이 나팔을 찾았죠.<br/>
         시간이 흐르며 사람들은 <span className="analog-highlight-blue">화려한 복식</span>과 <span className="analog-highlight-blue">시끄러운 꽹과리</span>에 더 끌리게 되었지만, 중요한 순간마다 <span className="analog-highlight-blue">이야기꾼</span>들은 여전히 '푸른 나팔'을 꺼내들었어요.<br/>

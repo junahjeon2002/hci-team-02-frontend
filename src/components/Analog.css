@@ -98,13 +98,22 @@
 .analog-btnicon {
   width: 20px;
 }
-.analog-article {
+.analog-article-analog {
   margin: 22px 0 0 0;
-  font-size: 14px;
+  font-size: 20px;
   line-height: 1.7;
   color: #222;
   word-break: keep-all;
   text-align: left;
+}
+.analog-article-origin {
+  margin: 22px 0 0 0;
+  font-size: 20px;
+  line-height: 1.7;
+  color: #222;
+  word-break: keep-all;
+  text-align: left;
+  word-break: break-all;
 }
 .analog-highlight-blue {
   color: #3b6eea;
