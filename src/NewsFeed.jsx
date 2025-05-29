@@ -46,7 +46,7 @@ const NewsFeed = () => {
   useEffect(() => {
     axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`)
       .then((res) => {
-        setArticles(res.data);
+        setArticles(res.data.slice(0, 10));
       })
       .catch((err) => {
         console.error("Failed to fetch articles:", err);
