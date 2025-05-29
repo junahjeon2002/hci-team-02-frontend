@@ -44,87 +44,19 @@ const NewsFeed = () => {
   }, []);
 
   useEffect(() => {
-    axios.get("http://3.36.74.61:8080/article/page1")
+    axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`)
       .then((res) => {
         setArticles(res.data);
       })
       .catch((err) => {
         console.error("Failed to fetch articles:", err);
       });
-  }, []);
+  }, [selectedCategory]);
   const toggleKeywordsBox = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
 
-  // 샘플 데이터 (API 호출 성공 시 이 데이터는 사용되지 않음)
-  const categories = ["정치", "경제", "사회", "생활", "IT", "세계", "사설/칼럼"];
-  //const keywords = ["트럼프", "대선", "화재", "전쟁", "커피"]; // "커피" 키워드 추가
-  // const articles = [
-  //   {
-  //     media: "한겨레",
-  //     indicator: "normal",
-  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-  //     preview: "",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "normal",
-  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-  //     preview: "",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "bias",
-  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-  //     preview: "",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "warning",
-  //     title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
-  //     preview: "",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "bias",
-  //     title: "기사 제목 5",
-  //     preview: "기사 내용 프리뷰 5",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "normal",
-  //     title: "기사 제목 6",
-  //     preview: "기사 내용 프리뷰 6",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "warning",
-  //     title: "기사 제목 7",
-  //     preview: "기사 내용 프리뷰 7",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  //   {
-  //     media: "한겨레",
-  //     indicator: "normal",
-  //     title: "기사 제목 8",
-  //     preview: "기사 내용 프리뷰 8",
-  //     date: "2025.05.15",
-  //     reporter: "김은형기자"
-  //   },
-  // ];
+
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
