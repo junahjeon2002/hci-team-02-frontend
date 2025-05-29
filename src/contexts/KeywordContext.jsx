@@ -5,7 +5,6 @@ const KeywordContext = createContext();
 
 export const KeywordProvider = ({ children }) => {
   const [keywords, setKeywords] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
@@ -29,8 +28,6 @@ export const KeywordProvider = ({ children }) => {
         console.error('Error fetching keywords:', error.response || error);
         setError(error);
         setKeywords([]);
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -38,7 +35,7 @@ export const KeywordProvider = ({ children }) => {
   }, []);
 
   return (
-    <KeywordContext.Provider value={{ keywords, isLoading, error }}>
+    <KeywordContext.Provider value={{ keywords, error }}>
       {children}
     </KeywordContext.Provider>
   );
