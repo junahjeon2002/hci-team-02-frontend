@@ -11,6 +11,10 @@ const NewsFeed = () => {
   const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
 
   useEffect(() => {
+    console.log("📌 Updated keywords:", keywords);
+  }, [keywords]);
+
+  useEffect(() => {
     // API 호출 함수
     const fetchKeywords = async () => {
       try {
@@ -135,7 +139,7 @@ const NewsFeed = () => {
         {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
+             {Array.isArray(keywords) && keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{

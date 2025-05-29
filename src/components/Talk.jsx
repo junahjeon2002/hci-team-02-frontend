@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./Talk.css";
 
 const avatars = [
@@ -11,6 +11,7 @@ const avatars = [
 ];
 
 export default function Talk() {
+  const { id } = useParams();
   return (
     <div className="talk-card">
       {/* 상단바 */}
@@ -34,7 +35,7 @@ export default function Talk() {
        </div>
        <hr className="analog-divider" />
       {/* 비유 보기 버튼 */}
-      <Link to="/article/:id/analogy" style={{ textDecoration: 'none' }}>
+      <Link to={`/article/${id}/analogy`} style={{ textDecoration: 'none' }}>
         <button className="talk-btn">
             비유 보기 <img src="/analog.svg" alt="전구" className="talk-bulb" />
         </button>

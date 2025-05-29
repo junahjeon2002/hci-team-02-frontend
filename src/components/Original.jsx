@@ -27,19 +27,21 @@ export default function Analog() {
   };
 
   useEffect(() => {
-    axios.get(`http://3.36.74.61:8080/article/${id}`)
+    axios.get(`http://3.36.74.61:8080/article/view/${id}`)
       .then(res => {
         setArticle(res.data);
+        console.log(id)
       })
       .catch(err => {
         console.error("failed to fetch article", err);
       })
-  }, [ ])
+  }, [id])
 
   const handleClosePopup = () => {
     setShowPopup(false);
     setPopupContent('');
   };
+
   if (!article) {
     return <div>loading</div>
   }
@@ -59,7 +61,7 @@ export default function Analog() {
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
         <span className="analog-reporter">{article["author"]["name"]} 기자</span>
-        <img src="/한겨레.png" alt="한겨레" className="analog-logo" />
+        <img src={article["author"]["press"]?.logo_img_src} alt="한겨레" className="analog-logo" />
       </div>
       <div className="analog-dates">
         <span className="analog-date">수정 {article.edited_at}</span>
