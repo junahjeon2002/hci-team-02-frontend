@@ -3,12 +3,13 @@ import "./Analog.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
-export default function Analog() {
+export default function Original() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupContent, setPopupContent] = useState('');
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
   const [article, setArticle] = useState(null);  // API 응답 저장
   const { id } = useParams();
+
   const handleWordClick = (e, content) => {
     setShowPopup(true);
     setPopupContent(content);

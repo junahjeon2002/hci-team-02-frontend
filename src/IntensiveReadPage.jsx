@@ -1,10 +1,12 @@
 import React from "react";
 import "./components/Analog.css"; // Corrected import path
 import { Link, useNavigate, useParams } from "react-router-dom"; // Link, useNavigate, useParams 모두 필요
+import { useKeywords } from './contexts/KeywordContext';
 
 const IntensiveReadPage = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // 기사 ID를 URL에서 가져옴
+  const { keywords } = useKeywords();
 
   // 이미지 내용을 기반으로 한 샘플 데이터 (텍스트 색상 반영)
   const articleData = {
@@ -14,7 +16,7 @@ const IntensiveReadPage = () => {
     등록시간: "2025-05-15 07:35",
     warning: "주의: 가짜 뉴스의 위험이 있습니다.",
     content: [
-      `최근 개봉해 좋은 성적을 거두고 있는 한국 영화 ‘승부’, ‘야당’, ‘거룩한 밤: 데몬 헌터스의 공통점은 무엇일까요? <span style="color: #fff; font-weight: bold;">바로 종이신문 한겨레가 등장한다는 점입니다.</span>`,
+      `최근 개봉해 좋은 성적을 거두고 있는 한국 영화 '승부', '야당', '거룩한 밤: 데몬 헌터스의 공통점은 무엇일까요? <span style="color: #fff; font-weight: bold;">바로 종이신문 한겨레가 등장한다는 점입니다.</span>`,
       `한겨레는 일간지 가운데 유독 실명으로 스크린에 자주 등장하는 소품입니다. 진실보다 시청률이나 조회수에 집착하는 미디어의 폐해를 그린 '특종: 량첸살인기'(2015), 아이엠에프(IMF) 구제금융 요청 당시의 한국 사회를 복기한 '국가부도의 날'(2018) 등 <span style="color: #fff; font-weight: bold;">가볍지 않은 주제 의식을 지닌 영화들에서 한겨레신문은 자주 호출됐습니다.</span>`,
       `<span style="color: #aaa;">올해 최고 흥행작 '야당'에서는 부패한 대권 주자의 아들이 부패한 검사에게 심각한 표정으로 건네는 신문이 한겨레였죠.</span>`,
     ]
