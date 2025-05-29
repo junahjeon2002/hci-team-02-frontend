@@ -28,7 +28,7 @@ const IntensiveReadPage = () => {
   };
 
   return (
-    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '300px', margin: 'auto', backgroundColor: '#333', color: '#fff' }}> {/* 배경색을 어둡게, 기본 글씨색을 밝게 조정 */}
+    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '95%', margin: 'auto', backgroundColor: '#333', color: '#fff' }}> {/* 배경색을 어둡게, 기본 글씨색을 밝게 조정 */}
       {/* 상단 네비게이션 - 홈 아이콘, VIEWS 로고, 빈 공간 */}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', padding: '0 10px' }}>
         {/* 홈 아이콘 */}
@@ -37,7 +37,7 @@ const IntensiveReadPage = () => {
         </span>
         {/* VIEWS 로고 - 중앙에 배치 */}
         <div style={{ flexGrow: 1, textAlign: 'center' }}>
-           <img src="/VEWS 로고.png" alt="VIEWS Logo" style={{ width: '50px' }} />
+           <img src="/VEWSLogoWhite.svg" alt="VIEWS Logo" style={{ height: '40px' }} />
         </div>
         {/* 오른쪽 빈 공간 (홈 아이콘과 동일한 너비) */}
         <div style={{ width: '24px' }}></div>

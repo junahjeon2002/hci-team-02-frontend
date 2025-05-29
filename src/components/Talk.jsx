@@ -70,7 +70,7 @@ export default function Talk() {
         <Link to="/">
           <img src="/home.svg" alt="홈" className="talk-homeicon" />
         </Link>
-        <img src="/VEWS%20로고.png" alt="VEWS" className="talk-vewslogo" />
+        <img src="/VEWSLogo.svg" alt="VEWS" className="talk-vewslogo" />
       </div>
       {/* 기사 제목/경고/기자/로고 */}
       <div className="talk-title">{articleTitle}</div>
