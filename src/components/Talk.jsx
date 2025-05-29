@@ -16,6 +16,7 @@ export default function Talk() {
   const [chatLines, setChatLines] = useState([]);
   const [articleTitle, setArticleTitle] = useState('');
   const [error, setError] = useState(null);
+  const [image, setImage] = useState(null);
 
   useEffect(() => {
     const fetchTalkData = async () => {
@@ -30,6 +31,7 @@ export default function Talk() {
         console.log('Response data:', response.data); // 디버깅용 로그
         setChatLines(response.data.chat_lines || []);
         setArticleTitle(response.data.title || '제목 없음');
+        setImage(response.data["author"]["press"]?.logo_img_src)
         setError(null); // 성공 시 에러 초기화
       } catch (error) {
         console.error('Error fetching talk data:', error);
@@ -78,7 +80,7 @@ export default function Talk() {
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
         <span className="analog-reporter">김준영 기자</span>
-        <img src="/한겨레.png" alt="한겨레" className="analog-logo" />
+        <img src={image} alt="한겨레" className="analog-logo" />
       </div>
       <div className="analog-dates">
         <span className="analog-date">수정 2025-05-16 09:09</span>
