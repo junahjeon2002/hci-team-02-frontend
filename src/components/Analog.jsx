@@ -1,8 +1,10 @@
 import React from "react";
 import "./Analog.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export default function Analog() {
+  const { id } = useParams();
+
   return (
     <div className="analog-card">
       {/* Top bar */}
@@ -27,7 +29,7 @@ export default function Analog() {
        <hr className="analog-divider" />
       {/* Button row */}
       <div className="analog-btnrow">
-        <Link to="/article/:id/talk" style={{ textDecoration: 'none' }}>
+        <Link to={`/article/${id}/talk`} style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
             <img src="/talkbox.svg" alt="톡" className="analog-btnicon" />
             톡 보기

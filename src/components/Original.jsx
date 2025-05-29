@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import "./Analog.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
-export default function Analog() {
+export default function Original() {
   const [showPopup, setShowPopup] = useState(false);
   const [popupContent, setPopupContent] = useState('');
   const [popupPosition, setPopupPosition] = useState({ top: 0, left: 0 });
+  const { id } = useParams();
 
   const handleWordClick = (e, content) => {
     setShowPopup(true);
@@ -52,7 +53,7 @@ export default function Analog() {
        </div>
        <hr className="analog-divider" />
       {/* Button row */}
-      <Link to="/article/:id/analogy" style={{ textDecoration: 'none' }}>
+      <Link to={`/article/${id}/analogy`} style={{ textDecoration: 'none' }}>
         <div className="analog-btnrow">
           <button className="analog-btn">
             <img src="/analog.svg" alt="비유" className="analog-btnicon" />

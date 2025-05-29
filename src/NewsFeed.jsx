@@ -1,33 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
 import { Link } from 'react-router-dom'; // Link import
-import axios from 'axios'; // axios import
+import { useKeywords } from './contexts/KeywordContext';
 
 const NewsFeed = () => {
   const [isKeywordsBoxOpen, setIsKeywordsBoxOpen] = useState(true); // 키워드 상자 상태 관리
   const [selectedCategory, setSelectedCategory] = useState('정치'); // 선택된 카테고리 상태 추가
-  const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
-
-  useEffect(() => {
-    // API 호출 함수
-    const fetchKeywords = async () => {
-      try {
-        const response = await axios.post('http://3.36.74.61:8080/article/keywords', {}, {
-          headers: {
-          }
-        });
-        // API 응답에서 keywords 배열을 추출하여 상태 업데이트
-        setKeywords(response.data.keywords);
-      } catch (error) {
-        console.error('Error fetching keywords:', error);
-        // 에러 발생 시 기본 키워드를 설정하거나 사용자에게 알림
-        // setKeywords([]); // 에러 시 빈 배열 또는 기본 키워드 설정
-      }
-    };
-
-    fetchKeywords();
-  }, []); // 컴포넌트가 처음 마운트될 때만 실행
+  const { keywords, isLoading, error } = useKeywords();
 
   const toggleKeywordsBox = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
@@ -38,6 +18,7 @@ const NewsFeed = () => {
   // const keywords = ["트럼프", "대선", "화재", "전쟁", "커피"]; // 하드코딩된 키워드 제거
   const articles = [
     {
+      id: '1',
       media: "한겨레",
       indicator: "normal",
       title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
@@ -46,6 +27,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '2',
       media: "한겨레",
       indicator: "normal",
       title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
@@ -54,6 +36,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '3',
       media: "한겨레",
       indicator: "bias",
       title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
@@ -62,6 +45,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '4',
       media: "한겨레",
       indicator: "warning",
       title: "영화 '승부'에서 이병헌은 왜 한겨레신문을 봤을까요?",
@@ -70,6 +54,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '5',
       media: "한겨레",
       indicator: "bias",
       title: "기사 제목 5",
@@ -78,6 +63,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '6',
       media: "한겨레",
       indicator: "normal",
       title: "기사 제목 6",
@@ -86,6 +72,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '7',
       media: "한겨레",
       indicator: "warning",
       title: "기사 제목 7",
@@ -94,6 +81,7 @@ const NewsFeed = () => {
       reporter: "김은형기자"
     },
     {
+      id: '8',
       media: "한겨레",
       indicator: "normal",
       title: "기사 제목 8",
@@ -106,6 +94,10 @@ const NewsFeed = () => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+
+  if (error) {
+    console.error('Error loading keywords:', error);
+  }
 
   return (
     <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '300px', margin: 'auto' }}>
@@ -123,7 +115,7 @@ const NewsFeed = () => {
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontWeight: 'bold' }}>오늘의 키워드</div>
         )}
         {/* API로부터 가져온 키워드를 사용 */}
-        {isKeywordsBoxOpen && (
+        {isKeywordsBoxOpen && !isLoading && keywords && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
              {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
@@ -172,7 +164,7 @@ const NewsFeed = () => {
       </div>
       <div>
         {articles.map((article, index) => (
-          <Link key={index} to={`/article/${article.title}/analogy`} style={{ textDecoration: 'none', color: 'inherit' }}>
+          <Link key={index} to={`/article/${article.uuid}/analogy`} style={{ textDecoration: 'none', color: 'inherit' }}>
             <div style={{ border: '1px solid #ccc', padding: '15px 10px', marginBottom: '10px', display: 'flex', alignItems: 'center', position: 'relative' }}> {/* position: relative 추가 */}
               {/* 왼쪽 섹션: 로고와 지표 */}
               <div style={{ marginRight: '15px', display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
