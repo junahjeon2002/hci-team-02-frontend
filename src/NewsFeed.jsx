@@ -19,25 +19,34 @@ const NewsFeed = () => {
     const fetchKeywords = async () => {
       try {
         const response = await axios.post('http://3.36.74.61:8080/article/keywords', {}, {
-          headers: {
-          }
+          headers: {}
         });
-        // API 응답에서 keywords 배열을 추출하여 상태 업데이트
-        setKeywords(response.data.keywords);
+        console.log('API Response:', response.data);
+        // 서버 응답 형식에 맞게 데이터 처리
+        if (response.data && response.data['핵심 키워드']) {
+          // 객체를 배열로 변환
+          const keywordsArray = Object.entries(response.data['핵심 키워드']).map(([keyword, count]) => ({
+            keyword,
+            count
+          }));
+          setKeywords(keywordsArray);
+        } else {
+          console.error('Invalid response format:', response.data);
+          setKeywords([]);
+        }
       } catch (error) {
         console.error('Error fetching keywords:', error);
-        // 에러 발생 시 기본 키워드를 설정하거나 사용자에게 알림
-        // setKeywords([]); // 에러 시 빈 배열 또는 기본 키워드 설정
+        setKeywords([]);
       }
     };
 
     fetchKeywords();
-  }, []); // 컴포넌트가 처음 마운트될 때만 실행
+  }, []);
 
   useEffect(() => {
     axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`)
       .then((res) => {
-        setArticles(res.data); // 받아온 기사 저장
+        setArticles(res.data);
       })
       .catch((err) => {
         console.error("Failed to fetch articles:", err);
@@ -47,8 +56,6 @@ const NewsFeed = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
 
-  // 샘플 데이터 (API 호출 성공 시 이 데이터는 사용되지 않음)
-  const categories = ["정치", "경제", "사회", "생활", "IT", "세계", "사설/칼럼"];
 
 
   const handleCategoryClick = (category) => {
@@ -73,7 +80,7 @@ const NewsFeed = () => {
         {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && keywords && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {Array.isArray(keywords) && keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
+             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{
