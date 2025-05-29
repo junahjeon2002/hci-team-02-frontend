@@ -7,19 +7,22 @@ import Talk from './components/Talk';
 import OriginalArticleView from './OriginalArticleView';
 import IntensiveReadPage from './IntensiveReadPage';
 import { Routes, Route } from 'react-router-dom';
+import { KeywordProvider } from './contexts/KeywordContext';
 
 function App() {
   return (
-    <div className="App">
-      <Routes>
-        <Route path="/" element={<NewsFeed />} />
-        <Route path="/article/트럼프" element={<IntensiveReadPage />} />
-        <Route path="/article/:id" element={<Analog />} />
-        <Route path="/article/:id/analogy" element={<Analog />} />
-        <Route path="/article/:id/talk" element={<Talk />} />
-        <Route path="/article/:id/original" element={<Original />} />
-      </Routes>
-    </div>
+    <KeywordProvider>
+      <div className="App">
+        <Routes>
+          <Route path="/" element={<NewsFeed />} />
+          <Route path="/article/트럼프" element={<IntensiveReadPage />} />
+          <Route path="/article/:id" element={<Analog />} />
+          <Route path="/article/:id/analogy" element={<Analog />} />
+          <Route path="/article/:id/talk" element={<Talk />} />
+          <Route path="/article/:id/original" element={<Original />} />
+        </Routes>
+      </div>
+    </KeywordProvider>
   );
 }
 

@@ -2,8 +2,8 @@ import React, { useState, useEffect } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
 import { Link } from 'react-router-dom'; // Link import
-import axios from 'axios'; // axios import
-
+import { useKeywords } from './contexts/KeywordContext';
+import axios from "axios"
 const NewsFeed = () => {
   const [isKeywordsBoxOpen, setIsKeywordsBoxOpen] = useState(true); // 키워드 상자 상태 관리
   const [selectedCategory, setSelectedCategory] = useState('정치'); // 선택된 카테고리 상태 추가
@@ -133,9 +133,9 @@ const NewsFeed = () => {
           <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', fontWeight: 'bold' }}>오늘의 키워드</div>
         )}
         {/* API로부터 가져온 키워드를 사용 */}
-        {isKeywordsBoxOpen && (
+        {isKeywordsBoxOpen && keywords && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
+             {Array.isArray(keywords) && keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{
