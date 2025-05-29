@@ -59,7 +59,12 @@ export default function Analog() {
       </div>
       {/* Article */}
       <div className="analog-article-analog">
-          {article["story_summary"]?.story}
+        {article["story_summary"]?.story.split('\n').map((line, idx) => (
+          <React.Fragment key={idx}>
+            {line}
+            <br />
+          </React.Fragment>
+        ))}
       </div>
     </div>
   );
