@@ -125,7 +125,7 @@ const NewsFeed = () => {
         {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
+             {Array.isArray(keywords) && keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{
