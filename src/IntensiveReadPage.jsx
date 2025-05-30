@@ -1,26 +1,58 @@
-import React from "react";
-import "./components/Analog.css"; // Corrected import path
+import React, { useState, useEffect } from "react";
+import "./components/Intensive.css"; 
 import { Link, useNavigate, useParams } from "react-router-dom"; // Link, useNavigate, useParams 모두 필요
 import { useKeywords } from './contexts/KeywordContext';
+import axios from "axios"
+
 
 const IntensiveReadPage = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // 기사 ID를 URL에서 가져옴
-  const { keywords } = useKeywords();
+  const [article, setArticle] = useState(null);  // API 응답 저장
+  function highlightToHtml(text) {
+    const parts = text.split(/\[\[highlight\]\]|\[\[\/highlight\]\]/);
+    let result = '';
+    for (let i = 0; i < parts.length; i++) {
+      if (i % 2 === 1) {
+        // 하이라이트 구간
+        result += `<strong>${parts[i]}</strong>`;
+      } else {
+        // 일반 구간
+        result += `<span class="dimmed">${parts[i]}</span>`;
+      }
+    }
+    return result;
+  }
 
-  // 이미지 내용을 기반으로 한 샘플 데이터 (텍스트 색상 반영)
-  const articleData = {
-    title: "영화 '승부'에서 이병헌은 왜 한겨레 신문을 봤을까요?",
-    author: "김준영 기자",
-    수정시간: "2025-05-16 09:09",
-    등록시간: "2025-05-15 07:35",
-    warning: "주의: 가짜 뉴스의 위험이 있습니다.",
-    content: [
-      `최근 개봉해 좋은 성적을 거두고 있는 한국 영화 '승부', '야당', '거룩한 밤: 데몬 헌터스의 공통점은 무엇일까요? <span style="color: #fff; font-weight: bold;">바로 종이신문 한겨레가 등장한다는 점입니다.</span>`,
-      `한겨레는 일간지 가운데 유독 실명으로 스크린에 자주 등장하는 소품입니다. 진실보다 시청률이나 조회수에 집착하는 미디어의 폐해를 그린 '특종: 량첸살인기'(2015), 아이엠에프(IMF) 구제금융 요청 당시의 한국 사회를 복기한 '국가부도의 날'(2018) 등 <span style="color: #fff; font-weight: bold;">가볍지 않은 주제 의식을 지닌 영화들에서 한겨레신문은 자주 호출됐습니다.</span>`,
-      `<span style="color: #aaa;">올해 최고 흥행작 '야당'에서는 부패한 대권 주자의 아들이 부패한 검사에게 심각한 표정으로 건네는 신문이 한겨레였죠.</span>`,
-    ]
-  };
+  useEffect(() => {
+    const fetchArticleWithHighlight = async () => {
+      try {
+        // 1. article 본문 가져오기
+        const articleRes = await axios.get(`http://3.36.74.61:8080/article/view/${id}`);
+        const articleData = articleRes.data;
+
+        // 2. highlight된 버전 가져오기
+        const highlightRes = await axios.get(`http://3.36.74.61:8080/article/highlight/${id}`);
+        const highlightedText = highlightToHtml(highlightRes.data.highlighted);
+
+        // 3. highlight 내용을 article에 반영
+        const updatedArticle = {
+          ...articleData,
+          content: highlightedText,  // 기존 content 덮어쓰기
+        };
+
+        setArticle(updatedArticle);
+      } catch (err) {
+        console.error("Failed to fetch article or highlight", err);
+      }
+    };
+
+    fetchArticleWithHighlight();
+  }, [id]);
+
+if (!article) {
+    return <div>Loading...</div>;
+  }
 
   // "홈" 아이콘 클릭 시 메인 페이지로 이동
   const handleGoHome = () => {
@@ -28,46 +60,41 @@ const IntensiveReadPage = () => {
   };
 
   return (
-    <div style={{ padding: '10px', paddingTop: '5vh', border: '1px solid #ccc', width: '95%', margin: 'auto', backgroundColor: '#333', color: '#fff' }}> {/* 배경색을 어둡게, 기본 글씨색을 밝게 조정 */}
-      {/* 상단 네비게이션 - 홈 아이콘, VIEWS 로고, 빈 공간 */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', padding: '0 10px' }}>
-        {/* 홈 아이콘 */}
-        <span onClick={handleGoHome} style={{ cursor: 'pointer' }}>
-          <img src="/home.svg" alt="홈" style={{ width: '24px' }} />
-        </span>
-        {/* VIEWS 로고 - 중앙에 배치 */}
-        <div style={{ flexGrow: 1, textAlign: 'center' }}>
-           <img src="/VEWSLogoWhite.svg" alt="VIEWS Logo" style={{ height: '40px' }} />
+    <div className="analog-card">
+      {/* Top bar */}
+      <div className="analog-topbar">
+        <Link to="/">
+          <img src="/home.svg" alt="홈" className="analog-homeicon" />
+        </Link>
+        <img src="/VEWSLogoWhite.svg" alt="VEWS" className="analog-vewslogo" />
+      </div>
+      {/* Title */}
+      <div className="analog-title">{article.title}</div>
+      <div className="analog-warning">주의: 가짜 뉴스의 위험이 있습니다.</div>
+      {/* Info row */}
+      <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
+        <span className="analog-reporter">{article["author"]["name"]} 기자</span>
+        <img src={article["author"]["press"]?.logo_img_src} alt="한겨레" className="analog-logo" />
+      </div>
+      <div className="analog-dates">
+        <span className="analog-date">수정 {article.edited_at}</span>
+        <span className="analog-date">등록 {article.published_at}</span>
         </div>
-        {/* 오른쪽 빈 공간 (홈 아이콘과 동일한 너비) */}
-        <div style={{ width: '24px' }}></div>
+        <hr className="analog-divider" />
+      {/* Button row */}
+      <div className="analog-btnrow">
       </div>
-
-      {/* 구분선 */}
-      <hr style={{ borderColor: '#555', margin: '0 10px' }}/>
-
-      {/* 기사 제목 */}
-      <h2 style={{ marginBottom: '5px', color: '#fff' }}>{articleData.title}</h2>
-
-      {/* 가짜 뉴스 경고 */}
-      <div style={{ color: 'red', fontSize: '12px', marginBottom: '10px', textAlign: 'right' }}>{articleData.warning}</div>
-
-      {/* 기자 정보 및 시간 */}
-      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '14px', marginBottom: '5px', color: '#ccc' }}>
-         <span>{articleData.author}</span>
-         <div style={{ fontSize: '12px', color: '#aaa' }}>
-           수정 {articleData.수정시간} 등록 {articleData.등록시간}
-         </div>
+      {/* Article Container for relative positioning */}
+      <div style={{ position: 'relative' }}>
+        {/* Article */}
+        <div className="analog-article-origin">
+          <div
+            style={{ lineHeight: "1.6", fontSize: "16px" }}
+            dangerouslySetInnerHTML={{ __html: article.content }}
+          />
+        </div>
+        {/* Dictionary Popup */}
       </div>
-      <hr style={{ borderColor: '#555' }}/>
-
-      {/* 기사 내용 - 텍스트 색상 반영 */}
-      <div className="analog-article"> {/* Original.jsx 스타일 및 내용 반영 */}
-        {articleData.content.map((paragraph, index) => (
-          <p key={index} style={{ marginBottom: '10px', lineHeight: '1.6', fontSize: '0.9em', color: '#aaa' }} dangerouslySetInnerHTML={{ __html: paragraph }}></p>
-        ))}
-      </div>
-
     </div>
   );
 };
