@@ -15,7 +15,7 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<NewsFeed />} />
-          <Route path="/article/트럼프" element={<IntensiveReadPage />} />
+          <Route path="/article/:id/intensive" element={<IntensiveReadPage />} />
           <Route path="/article/:id" element={<Analog />} />
           <Route path="/article/:id/analogy" element={<Analog />} />
           <Route path="/article/:id/talk" element={<Talk />} />

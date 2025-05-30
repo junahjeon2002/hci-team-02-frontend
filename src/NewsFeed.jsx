@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
-import { Link } from 'react-router-dom'; // Link import
+import { Link, useParams } from 'react-router-dom'; // Link import
 import { useKeywords } from './contexts/KeywordContext';
 import axios from "axios"
+
 const NewsFeed = () => {
   const [isKeywordsBoxOpen, setIsKeywordsBoxOpen] = useState(true); // 키워드 상자 상태 관리
   const [selectedCategory, setSelectedCategory] = useState('정치'); // 선택된 카테고리 상태 추가
   const [articles, setArticles] = useState([]); // 백엔드에서 받아올 기사 목록
   const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
+  const id = useParams()
 
   useEffect(() => {
     console.log("📌 Updated keywords:", keywords);
@@ -97,30 +99,32 @@ const NewsFeed = () => {
         )}
         {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && keywords && (
-           <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.map((item, index) => ( // 처음 5개의 키워드만 사용
-               <span
-                 key={index}
-                 style={{
-                   position: 'absolute', // 절대 위치 적용
-                   color: '#000',
-                   cursor: 'pointer',
-                   textDecoration: 'none',
-                   fontSize: '0.8em', // 키워드 글씨 크기 추가 축소
-                   border: '1px solid #000', // 얇은 검은색 테두리 추가
-                   padding: '3px 6px', // 테두리와 글씨 사이 간격 추가
-                   borderRadius: '15px', // 동그라미 모양을 만들기 위해 충분히 큰 값 설정
-                   // TODO: API 응답 데이터에 위치 정보가 없다면, 위치 지정 로직 수정 필요
-                   top: index === 0 ? '10px' : index === 1 ? '1px' : index === 2 ? '40px' : index === 3 ? '30px' : '10px', // 인덱스에 따라 임의의 위치 지정 (사진 및 5개 키워드 고려)
-                   left: index === 0 ? '1px' : index === 1 ? '80px' : index === 2 ? '50px' : index === 3 ? '150px' : '200px', // 위치 간격 조정
-                 }}
-               >
-                 {/* "트럼프" 키워드 클릭 시 집중 읽기 페이지로 이동, 다른 키워드는 현재 기능 없음 */}
-                 {/* TODO: 키워드 클릭 시 동작 정의 필요 */}
-                 {item.keyword} {/* item.keyword로 키워드 텍스트 표시 */}
-               </span>
-             ))}
-           </div>
+          <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
+            {keywords.map((item, index) => ( // 처음 5개의 키워드만 사용
+              <Link to={`/article/${item.article_id}/intensive`}> 
+                <span
+                  key={index}
+                  style={{
+                    position: 'absolute', // 절대 위치 적용
+                    color: '#000',
+                    cursor: 'pointer',
+                    textDecoration: 'none',
+                    fontSize: '0.8em', // 키워드 글씨 크기 추가 축소
+                    border: '1px solid #000', // 얇은 검은색 테두리 추가
+                    padding: '3px 6px', // 테두리와 글씨 사이 간격 추가
+                    borderRadius: '15px', // 동그라미 모양을 만들기 위해 충분히 큰 값 설정
+                    // TODO: API 응답 데이터에 위치 정보가 없다면, 위치 지정 로직 수정 필요
+                    top: index === 0 ? '10%' : index === 1 ? '0%' : index === 2 ? '50%' : index === 3 ? '45%' : '10%', // 인덱스에 따라 임의의 위치 지정 (사진 및 5개 키워드 고려)
+                    left: index === 0 ? '2%' : index === 1 ? '30%' : index === 2 ? '20%' : index === 3 ? '70%' : '50%', // 위치 간격 조정
+                  }}
+                >
+                  {/* "트럼프" 키워드 클릭 시 집중 읽기 페이지로 이동, 다른 키워드는 현재 기능 없음 */}
+                  {/* TODO: 키워드 클릭 시 동작 정의 필요 */}
+                  {item.keyword} {/* item.keyword로 키워드 텍스트 표시 */}
+                </span>
+              </Link>
+            ))}
+          </div>
          )}
       </div>
       <div style={{ display: 'flex', justifyContent: 'space-around', marginBottom: '10px' }}>
