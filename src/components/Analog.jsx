@@ -6,6 +6,9 @@ import axios from "axios"
 export default function Analog() {
   const { id } = useParams();
   const [article, setArticle] = useState(null);  // API 응답 저장
+  const [showTooltip, setShowTooltip] = useState(false);
+  const [tooltipContent, setTooltipContent] = useState('');
+  const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
 
   useEffect(() => {
     axios.get(`http://3.36.74.61:8080/article/view/${id}`)
@@ -16,9 +19,42 @@ export default function Analog() {
         console.error("failed to fetch article", err);
       })
   }, [id])
+
+  const handleWordClick = (e, originalWord) => {
+    const rect = e.target.getBoundingClientRect();
+    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+    setTooltipPosition({
+      top: rect.top + scrollTop,
+      left: rect.right + scrollLeft + 5,
+    });
+    setTooltipContent(originalWord);
+    setShowTooltip(true);
+  };
+
+  const handleCloseTooltip = () => {
+    setShowTooltip(false);
+    setTooltipContent('');
+  };
+
   if (!article) {
     return <div>Loading...</div>;
   }
+
+  // 비유된 단어를 원본 단어로 매핑
+  const dictionary = article["story_summary"]?.dictionary || {};
+  
+  // 비유된 단어를 찾아서 클릭 가능한 스팬으로 변환하는 함수
+  const replaceWordsWithClickableSpans = (text) => {
+    let result = text;
+    Object.entries(dictionary).forEach(([analogWord, originalWord]) => {
+      const regex = new RegExp(analogWord, 'g');
+      result = result.replace(regex, `<span class="clickable-word" data-original="${originalWord}">${analogWord}</span>`);
+    });
+    return result;
+  };
+
   return (
     <div className="analog-card">
       {/* Top bar */}
@@ -41,7 +77,7 @@ export default function Analog() {
         <span className="analog-date">등록 {article?.published_at}</span>
       </div>
 
-       <hr className="analog-divider" />
+      <hr className="analog-divider" />
       {/* Button row */}
       <div className="analog-btnrow">
         <Link to={`/article/${id}/talk`} style={{ textDecoration: 'none' }}>
@@ -61,11 +97,41 @@ export default function Analog() {
       <div className="analog-article-analog">
         {article["story_summary"]?.story.split('\n').map((line, idx) => (
           <React.Fragment key={idx}>
-            {line}
+            <div
+              dangerouslySetInnerHTML={{
+                __html: replaceWordsWithClickableSpans(line)
+              }}
+              onClick={(e) => {
+                if (e.target.classList.contains('clickable-word')) {
+                  handleWordClick(e, e.target.dataset.original);
+                }
+              }}
+            />
             <br />
           </React.Fragment>
         ))}
       </div>
+
+      {/* Tooltip */}
+      {showTooltip && (
+        <div
+          className="tooltip"
+          style={{
+            position: 'absolute',
+            top: tooltipPosition.top,
+            left: tooltipPosition.left,
+            backgroundColor: 'rgba(0, 0, 0, 0.8)',
+            color: 'white',
+            padding: '5px 10px',
+            borderRadius: '4px',
+            fontSize: '14px',
+            zIndex: 1000,
+          }}
+          onClick={handleCloseTooltip}
+        >
+          {tooltipContent}
+        </div>
+      )}
     </div>
   );
 }
