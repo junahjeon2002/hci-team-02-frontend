@@ -137,3 +137,26 @@
   text-decoration: underline;
   cursor: pointer;
 }
+
+.clickable-word {
+  color: #0066cc;
+  text-decoration: underline;
+  cursor: pointer;
+  position: relative;
+}
+
+.clickable-word:hover {
+  color: #004499;
+}
+
+.tooltip {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  z-index: 1000;
+  pointer-events: none;
+  white-space: nowrap;
+}
