@@ -23,13 +23,9 @@ const NewsFeed = () => {
         });
         console.log('API Response:', response.data);
         // 서버 응답 형식에 맞게 데이터 처리
-        if (response.data && response.data['핵심 키워드']) {
+        if (response.data) {
           // 객체를 배열로 변환
-          const keywordsArray = Object.entries(response.data['핵심 키워드']).map(([keyword, count]) => ({
-            keyword,
-            count
-          }));
-          setKeywords(keywordsArray);
+          setKeywords(response.data);
         } else {
           console.error('Invalid response format:', response.data);
           setKeywords([]);
@@ -44,14 +40,36 @@ const NewsFeed = () => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`)
-      .then((res) => {
-        setArticles(res.data.slice(0, 10));
-      })
-      .catch((err) => {
+    const fetchArticlesWithIndicators = async () => {
+      try {
+        // 1. 기사 리스트 가져오기
+        const res = await axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`);
+        const baseArticles = res.data.slice(0, 10);
+
+        // 2. 각 기사에 대해 indicator 가져오기
+        const enrichedArticles = await Promise.all(
+          baseArticles.map(async (article) => {
+            try {
+              const indicatorRes = await axios.get(`http://3.36.74.61:8080/article/bias/${article.id}`);
+              if (indicatorRes.data.reporting_bias === "있음") { return { ...article, indicator: true }; }
+              else { return { ...article, indicator: false }; }
+            } catch (err) {
+              console.warn(`Indicator fetch failed for article ${article.id}`, err);
+              return { ...article, indicator: null };
+            }
+          })
+        );
+        console.log(enrichedArticles)
+        // 3. 상태 업데이트
+        setArticles(enrichedArticles);
+      } catch (err) {
         console.error("Failed to fetch articles:", err);
-      });
+      }
+    };
+
+    fetchArticlesWithIndicators();
   }, [selectedCategory]);
+
   const toggleKeywordsBox = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
@@ -80,7 +98,7 @@ const NewsFeed = () => {
         {/* API로부터 가져온 키워드를 사용 */}
         {isKeywordsBoxOpen && keywords && (
            <div style={{ width: '100%', height: '100%', position: 'relative' }}> {/* position: relative 설정 */}
-             {keywords.slice(0, 5).map((item, index) => ( // 처음 5개의 키워드만 사용
+             {keywords.map((item, index) => ( // 처음 5개의 키워드만 사용
                <span
                  key={index}
                  style={{
@@ -140,14 +158,14 @@ const NewsFeed = () => {
               </div>
 
               {/* 가짜뉴스 경고 (조건부 렌더링) */}
-              {article.indicator === 'warning' && (
-                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
-                  <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '30px' }} /> {/* 가짜뉴스 경고 이미지 */}
+              {/* {article.indicator === 'warning' && (
+                <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> 
+                  <img src="/가짜뉴스경고.png" alt="가짜뉴스 경고" style={{ width: '30px' }} /> 
                 </div>
-              )}
+              )} */}
 
               {/* 편향 경고 (조건부 렌더링) */}
-              {article.indicator === 'bias' && (
+              {article.indicator && (
                 <div style={{ position: 'absolute', bottom: '0px', right: '10px', textAlign: 'center' }}> {/* 절대 위치 지정 및 조정 */}
                   <img src="/편향 경고.png" alt="편향 경고" style={{ width: '30px' }} /> {/* 편향 경고 이미지 */}
                 </div>
