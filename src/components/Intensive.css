@@ -1,4 +1,4 @@
-.analog-card {
+.intensive-card {
   max-width: 100%;
   margin: 40px auto;
   background: #000000;
@@ -8,12 +8,12 @@
   font-family: 'Pretendard', sans-serif;
   position: relative;
 }
-.analog-topbar {
+.intensive-topbar {
     position: relative;
     height: 40px; /* 로고 높이 + 여유 */
     margin-bottom: 10px;
   }
-  .analog-homeicon {
+  .intensive-homeicon {
     position: absolute;
     left: 0;
     top: 50%;
@@ -21,7 +21,7 @@
     width: 28px;
     height: 28px;
   }
-  .analog-vewslogo {
+  .intensive-vewslogo {
     display: block;
     margin: 0 auto;
     height: 40px;
@@ -30,7 +30,7 @@
     top: 50%;
     transform: translate(-50%, -50%);
   }
-  .analog-title {
+  .intensive-title {
   font-weight: 700;
   font-size: 19px;
   color: #ffffff;
@@ -38,7 +38,7 @@
   line-height: 1.3;
   text-align: left;
 }
-.analog-warning {
+.intensive-warning {
   color: #e23d3d;
   font-weight: 600;
   font-size: 12px;
@@ -46,7 +46,7 @@
   text-align: right;
   margin-bottom: 20px; 
 }
-.analog-inforow {
+.intensive-inforow {
   display: flex;
   align-items: center;
   font-size: 12px;
@@ -54,37 +54,37 @@
   margin: 18px 0 0 0;
   gap: 8px;
 }
-.analog-reporter {
+.intensive-reporter {
   font-weight: 500;
   color: #ffffff;
 }
-.analog-dates {
+.intensive-dates {
   display: flex;
   gap: 8px;
   margin-top: 2px;
 }
-.analog-date {
+.intensive-date {
   color: #bbb;
   font-size: 9px;
   margin-right: 8px;
 }
-.analog-logo {
+.intensive-logo {
   height: 60px;
   margin-left: auto;
 }
-.analog-divider {
+.intensive-divider {
     border: none;
     border-top: 1px solid #e0e0e0;
     margin: 18px 0 0 0; /* 위쪽 여백 조절 */
 }
-.analog-btnrow {
+.intensive-btnrow {
   display: flex;
   gap: 12px;
   margin: 18px 0 0 0;
   justify-content: space-between;
   width: 100%;
 }
-.analog-btn {
+.intensive-btn {
   display: flex;
   align-items: center;
   gap: 4px;
@@ -97,10 +97,10 @@
   color: #3b6eea;
   cursor: pointer;
 }
-.analog-btnicon {
+.intensive-btnicon {
   width: 20px;
 }
-.analog-article-analog {
+.intensive-article {
   margin: 22px 0 0 0;
   font-size: 20px;
   line-height: 1.7;
@@ -110,33 +110,24 @@
   word-break: break-all;
   color: #ffffff;
 }
-.analog-article-origin {
-  margin: 22px 0 0 0;
-  font-size: 20px;
-  line-height: 1.7;
-  color: #222;
-  word-break: keep-all;
-  text-align: left;
-  word-break: break-all;
-  color: #ffffff;
-}
-.analog-highlight-blue {
+
+.intensive-highlight-blue {
   color: #3b6eea;
   font-weight: 600;
 }
-.analog-highlight-purple {
+.intensive-highlight-purple {
   color: #7b4fe9;
   font-weight: 600;
 }
-.analog-highlight-pink {
+.intensive-highlight-pink {
   color: #e23d8f;
   font-weight: 600;
 }
-.analog-highlight-gray {
+.intensive-highlight-gray {
   color: #888;
   font-weight: 600;
 }
-.analog-link {
+.intensive-link {
   color: #3b6eea;
   text-decoration: underline;
   cursor: pointer;
