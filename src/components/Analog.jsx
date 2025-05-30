@@ -62,7 +62,9 @@ export default function Analog() {
         <Link to="/">
           <img src="/home.svg" alt="홈" className="analog-homeicon" />
         </Link>
-        <img src="/VEWS%20로고.png" alt="VEWS" className="analog-vewslogo" />
+        <Link to="/">
+          <img src="/VEWS%20로고.png" alt="VEWS" className="analog-vewslogo" />
+        </Link>
       </div>
       {/* Title */}
       <div className="analog-title">{article?.title}</div>

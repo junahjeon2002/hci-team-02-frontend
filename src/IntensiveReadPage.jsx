@@ -9,6 +9,8 @@ const IntensiveReadPage = () => {
   const navigate = useNavigate();
   const { id } = useParams(); // 기사 ID를 URL에서 가져옴
   const [article, setArticle] = useState(null);  // API 응답 저장
+  const { keywords } = useKeywords();
+
   function highlightToHtml(text) {
     const parts = text.split(/\[\[highlight\]\]|\[\[\/highlight\]\]/);
     let result = '';
@@ -62,11 +64,19 @@ if (!article) {
   return (
     <div className="analog-card">
       {/* Top bar */}
-      <div className="analog-topbar">
-        <Link to="/">
-          <img src="/home.svg" alt="홈" className="analog-homeicon" />
-        </Link>
-        <img src="/VEWSLogoWhite.svg" alt="VEWS" className="analog-vewslogo" />
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px', padding: '0 10px' }}>
+        {/* 홈 아이콘 */}
+        <span onClick={handleGoHome} style={{ cursor: 'pointer' }}>
+          <img src="/home.svg" alt="홈" style={{ width: '24px' }} />
+        </span>
+        {/* VIEWS 로고 - 중앙에 배치 */}
+        <div style={{ flexGrow: 1, textAlign: 'center' }}>
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <img src="/VEWSLogoWhite.svg" alt="VIEWS Logo" style={{ height: '40px' }} />
+          </Link>
+        </div>
+        {/* 오른쪽 빈 공간 (홈 아이콘과 동일한 너비) */}
+        <div style={{ width: '24px' }}></div>
       </div>
       {/* Title */}
       <div className="analog-title">{article.title}</div>
