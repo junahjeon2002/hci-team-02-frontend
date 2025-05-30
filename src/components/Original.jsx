@@ -54,11 +54,12 @@ export default function Original() {
         <Link to="/">
           <img src="/home.svg" alt="홈" className="analog-homeicon" />
         </Link>
-        <img src="/VEWS%20로고.png" alt="VEWS" className="analog-vewslogo" />
+        <Link to="/">
+          <img src="/VEWS%20로고.png" alt="VEWS" className="analog-vewslogo" />
+        </Link>
       </div>
       {/* Title */}
       <div className="analog-title">{article.title}</div>
-      <div className="analog-warning">주의: 가짜 뉴스의 위험이 있습니다.</div>
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
         <span className="analog-reporter">{article["author"]["name"]} 기자</span>

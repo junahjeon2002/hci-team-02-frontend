@@ -72,11 +72,12 @@ export default function Talk() {
         <Link to="/">
           <img src="/home.svg" alt="홈" className="talk-homeicon" />
         </Link>
-        <img src="/VEWSLogo.svg" alt="VEWS" className="talk-vewslogo" />
+        <Link to="/">
+          <img src="/VEWSLogo.svg" alt="VEWS" className="talk-vewslogo" />
+        </Link>
       </div>
       {/* 기사 제목/경고/기자/로고 */}
       <div className="talk-title">{articleTitle}</div>
-      <div className="talk-warning">주의: 가짜 뉴스의 위험이 있습니다.</div>
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
         <span className="analog-reporter">김준영 기자</span>
