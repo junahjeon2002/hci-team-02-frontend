@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 // import viewsLogo from '../VEWS 로고.png'; // public 폴더에 있으므로 제거
 // import fakeNewsWarningImage from '../가짜뉴스경고.png'; // public 폴더에 있으므로 제거
 import { Link, useParams } from 'react-router-dom'; // Link import
@@ -11,6 +11,7 @@ const NewsFeed = () => {
   const [articles, setArticles] = useState([]); // 백엔드에서 받아올 기사 목록
   const [keywords, setKeywords] = useState([]); // 키워드 상태 추가
   const id = useParams()
+  const articleCacheRef = useRef({});
 
   useEffect(() => {
     console.log("📌 Updated keywords:", keywords);
@@ -43,6 +44,10 @@ const NewsFeed = () => {
 
   useEffect(() => {
     const fetchArticlesWithIndicators = async () => {
+      if (articleCacheRef.current[selectedCategory]) {
+        setArticles(articleCacheRef.current[selectedCategory]);
+        return;
+      }
       try {
         // 1. 기사 리스트 가져오기
         const res = await axios.get(`http://3.36.74.61:8080/article/genre/${selectedCategory}`);
@@ -61,8 +66,9 @@ const NewsFeed = () => {
             }
           })
         );
+
+        articleCacheRef.current[selectedCategory] = enrichedArticles;
         console.log(enrichedArticles)
-        // 3. 상태 업데이트
         setArticles(enrichedArticles);
       } catch (err) {
         console.error("Failed to fetch articles:", err);
