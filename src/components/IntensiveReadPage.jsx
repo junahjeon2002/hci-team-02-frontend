@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "./Intensive.css"; 
+import "./Analog.css"; 
 import { Link, useNavigate, useParams } from "react-router-dom"; // Link, useNavigate, useParams 모두 필요
 import axios from "axios"
 
@@ -59,34 +59,34 @@ if (!article) {
   };
 
   return (
-    <div className="intensive-card">
+    <div className="analog-card">
       {/* Top bar */}
-      <div className="intensive-topbar">
+      <div className="analog-topbar">
         <Link to="/">
-          <img src="/home.svg" alt="홈" className="intensive-homeicon" />
+          <img src="/home.svg" alt="홈" className="analog-homeicon" />
         </Link>
-        <img src="/VEWSLogoWhite.svg" alt="VEWS" className="intensive-vewslogo" />
+        <img src="/VEWSLogo.svg" alt="VEWS" className="analog-vewslogo" />
       </div>
       {/* Title */}
-      <div className="intensive-title">{article.title}</div>
-      <div className="intensive-warning">주의: 가짜 뉴스의 위험이 있습니다.</div>
+      <div className="analog-title">{article.title}</div>
+      <div className="analog-warning">주의: 가짜 뉴스의 위험이 있습니다.</div>
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
-        <span className="intensive-reporter">{article["author"]["name"]} 기자</span>
-        <img src={article["author"]["press"]?.logo_img_src} alt="한겨레" className="intensive-logo" />
+        <span className="analog-reporter">{article["author"]["name"]} 기자</span>
+        <img src={article["author"]["press"]?.logo_img_src} alt="한겨레" className="analog-logo" />
       </div>
-      <div className="intensive-dates">
-        <span className="intensive-date">수정 {article.edited_at}</span>
-        <span className="intensive-date">등록 {article.published_at}</span>
+      <div className="analog-dates">
+        <span className="analog-date">수정 {article.edited_at}</span>
+        <span className="analog-date">등록 {article.published_at}</span>
         </div>
-        <hr className="intensive-divider" />
+        <hr className="analog-divider" />
       {/* Button row */}
-      <div className="intensive-btnrow">
+      <div className="analog-btnrow">
       </div>
       {/* Article Container for relative positioning */}
       <div style={{ position: 'relative' }}>
         {/* Article */}
-        <div className="intensive-article">
+        <div className="analog-article-analog">
           <div
             style={{ lineHeight: "1.6", fontSize: "16px" }}
             dangerouslySetInnerHTML={{ __html: article.content }}

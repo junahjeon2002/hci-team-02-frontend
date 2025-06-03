@@ -106,6 +106,7 @@
   word-break: keep-all;
   text-align: left;
   word-break: break-all;
+  white-space: pre-line;
 }
 .analog-article-origin {
   margin: 22px 0 0 0;
@@ -115,6 +116,7 @@
   word-break: keep-all;
   text-align: left;
   word-break: break-all;
+  white-space: pre-line;
 }
 .analog-highlight-blue {
   color: #3b6eea;

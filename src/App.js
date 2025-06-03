@@ -5,7 +5,7 @@ import Analog from './components/Analog';
 import Original from './components/Original';
 import Talk from './components/Talk';
 import OriginalArticleView from './OriginalArticleView';
-import IntensiveReadPage from './IntensiveReadPage';
+import IntensiveReadPage from './components/IntensiveReadPage';
 import { Routes, Route } from 'react-router-dom';
 import { KeywordProvider } from './contexts/KeywordContext';
 

@@ -15,6 +15,7 @@ export default function Talk() {
   const { id } = useParams();
   const [chatLines, setChatLines] = useState([]);
   const [articleTitle, setArticleTitle] = useState('');
+  const [author, setAuthor] = useState("");
   const [error, setError] = useState(null);
   const [image, setImage] = useState(null);
 
@@ -31,6 +32,7 @@ export default function Talk() {
         console.log('Response data:', response.data); // 디버깅용 로그
         setChatLines(response.data.chat_lines || []);
         setArticleTitle(response.data.title || '제목 없음');
+        setAuthor(response.data.author.name)
         setImage(response.data["author"]["press"]?.logo_img_src)
         setError(null); // 성공 시 에러 초기화
       } catch (error) {
@@ -80,7 +82,7 @@ export default function Talk() {
       <div className="talk-title">{articleTitle}</div>
       {/* Info row */}
       <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
-        <span className="analog-reporter">김준영 기자</span>
+        <span className="analog-reporter">{author} 기자</span>
         <img src={image} alt="한겨레" className="analog-logo" />
       </div>
       <div className="analog-dates">
@@ -98,10 +100,11 @@ export default function Talk() {
       <div className="talk-bubbles">
         {chatLines.map((line, idx) => (
           <div className="talk-bubble-row" key={idx}>
-            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', marginRight: '10px' }}>
-              <div style={{ fontSize: '0.7em', marginTop: '5px' }}>{line.speaker_name}</div>
+            <img className="talk-avatar" src="/basic.jpg" />
+            <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', marginRight: '10px' }}>
+              <div style={{ fontSize: '0.7em', marginTop: '5px', marginBottom: '8px', marginLeft: '12px', textAlign: 'left', fontWeight: 'bold' }}>{line.speaker_name}</div>
+              <div className="talk-bubble">{line.content}</div>
             </div>
-            <div className="talk-bubble">{line.content}</div>
           </div>
         ))}
       </div>
