@@ -1,14 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "./Analog.css";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios"
 
 export default function Analog() {
   const { id } = useParams();
-  const [article, setArticle] = useState(null);  // API 응답 저장
+  const [article, setArticle] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [tooltipContent, setTooltipContent] = useState('');
   const [tooltipPosition, setTooltipPosition] = useState({ top: 0, left: 0 });
+  const tooltipRef = useRef(null);
 
   useEffect(() => {
     axios.get(`http://3.36.74.61:8080/article/view/${id}`)
@@ -17,18 +18,45 @@ export default function Analog() {
       })
       .catch(err => {
         console.error("failed to fetch article", err);
-      })
-  }, [id])
+      });
+  }, [id]);
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (tooltipRef.current && !tooltipRef.current.contains(event.target)) {
+        setShowTooltip(false);
+        setTooltipContent('');
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
 
   const handleWordClick = (e, originalWord) => {
     const rect = e.target.getBoundingClientRect();
-    const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
-    const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+    const containerRect = document.querySelector('.analog-card')?.getBoundingClientRect() ?? { top: 0, left: 0 };
+    
+    const estimatedTooltipWidth = tooltipRef.current ? tooltipRef.current.offsetWidth : 200;
+    const estimatedTooltipHeight = tooltipRef.current ? tooltipRef.current.offsetHeight : 50;
+    const PADDING = 10;
 
-    setTooltipPosition({
-      top: rect.top + scrollTop,
-      left: rect.right + scrollLeft + 5,
-    });
+    let top = rect.top - containerRect.top - estimatedTooltipHeight + 25;
+    let left = rect.left - containerRect.left + (rect.width / 2) - (estimatedTooltipWidth / 2) + 20;
+
+    const containerWidth = containerRect.width ?? window.innerWidth;
+    if (left < PADDING) {
+      left = PADDING;
+    } else if (left + estimatedTooltipWidth > containerWidth - PADDING) {
+      left = containerWidth - estimatedTooltipWidth - PADDING;
+    }
+
+    if (top < PADDING) {
+      top = rect.bottom - containerRect.top + 5;
+    }
+
+    setTooltipPosition({ top, left });
     setTooltipContent(originalWord);
     setShowTooltip(true);
   };
@@ -42,10 +70,8 @@ export default function Analog() {
     return <div>Loading...</div>;
   }
 
-  // 비유된 단어를 원본 단어로 매핑
   const dictionary = article["story_summary"]?.dictionary || {};
-  
-  // 비유된 단어를 찾아서 클릭 가능한 스팬으로 변환하는 함수
+
   const replaceWordsWithClickableSpans = (text) => {
     let result = text;
     Object.entries(dictionary).forEach(([analogWord, originalWord]) => {
@@ -56,8 +82,7 @@ export default function Analog() {
   };
 
   return (
-    <div className="analog-card">
-      {/* Top bar */}
+    <div className="analog-card" style={{ position: 'relative' }}>
       <div className="analog-topbar">
         <Link to="/">
           <img src="/home.svg" alt="홈" className="analog-homeicon" />
@@ -66,12 +91,10 @@ export default function Analog() {
           <img src="/VEWS%20로고.png" alt="VEWS" className="analog-vewslogo" />
         </Link>
       </div>
-      {/* Title */}
       <div className="analog-title">{article?.title}</div>
-      {/* Info row */}
-      <div style={{display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between'}}>
+      <div style={{ display: 'flex', alignItems: 'center', width: '100%', justifyContent: 'space-between' }}>
         <span className="analog-reporter">{article["author"]?.name} 기자</span>
-        <img src={article["author"]["press"]?.logo_img_src} alt="한겨레" className="analog-logo" />
+        <img src={article["author"]["press"]?.logo_img_src} alt="press" className="analog-logo" />
       </div>
       <div className="analog-dates">
         <span className="analog-date">수정 {article?.edited_at}</span>
@@ -79,7 +102,7 @@ export default function Analog() {
       </div>
 
       <hr className="analog-divider" />
-      {/* Button row */}
+
       <div className="analog-btnrow">
         <Link to={`/article/${id}/talk`} style={{ textDecoration: 'none' }}>
           <button className="analog-btn">
@@ -94,7 +117,7 @@ export default function Analog() {
           </button>
         </Link>
       </div>
-      {/* Article */}
+
       <div className="analog-article-analog">
         {article["story_summary"]?.story.split('\n').map((line, idx) => (
           <React.Fragment key={idx}>
@@ -113,9 +136,9 @@ export default function Analog() {
         ))}
       </div>
 
-      {/* Tooltip */}
       {showTooltip && (
         <div
+          ref={tooltipRef}
           className="tooltip"
           style={{
             position: 'absolute',
@@ -128,7 +151,6 @@ export default function Analog() {
             fontSize: '14px',
             zIndex: 1000,
           }}
-          onClick={handleCloseTooltip}
         >
           {tooltipContent}
         </div>
