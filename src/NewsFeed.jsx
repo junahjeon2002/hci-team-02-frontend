@@ -82,7 +82,7 @@ const NewsFeed = () => {
     setIsKeywordsBoxOpen(!isKeywordsBoxOpen);
   };
 
-  const categories = ["정치", "경제", "사회", "생활", "IT", "세계", "사설/칼럼"]
+  const categories = ["정치", "경제", "사회", "생활", "IT", "세계"]
 
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
