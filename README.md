@@ -1,70 +1,55 @@
-# Getting Started with Create React App
+# hci-team-02-frontend
+2025 SNU HCI Spring Semester Team 2
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## 기여자
+- 송원영
+- 전준아아
 
-## Available Scripts
+## 프로젝트 설정
 
-In the project directory, you can run:
+### 필수 요구사항
+- Node.js (v16 이상)
+- npm 또는 yarn
 
-### `npm start`
+### 설치 방법
+1. 저장소 클론
+```bash
+git clone [repository-url]
+cd hci-team-02-frontend
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+2. 의존성 설치
+```bash
+npm install
+# 또는
+yarn install
+```
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## 실행 방법
 
-### `npm test`
+### 개발 서버 실행
+```bash
+npm start
+# 또는
+yarn start
+```
+개발 서버는 기본적으로 http://localhost:3000 에서 실행됩니다.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### 프로덕션 빌드
+```bash
+npm run build
+# 또는
+yarn build
+```
+빌드된 파일은 `build` 디렉토리에 생성됩니다.
 
-### `npm run build`
+## 백엔드 연동
+프로젝트는 백엔드 서버와 연동되어 있습니다. 백엔드 서버가 실행 중이어야 정상적으로 작동합니다.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+백엔드 서버 실행 방법은 [백엔드 저장소](https://github.com/[backend-repo-url])를 참조해주세요.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+## 기술 스택
+- React
+- React Router
+- Axios
+- React Scripts
