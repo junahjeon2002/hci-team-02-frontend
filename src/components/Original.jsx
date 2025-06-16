@@ -30,8 +30,11 @@ export default function Original() {
   useEffect(() => {
     axios.get(`http://3.36.74.61:8080/article/view/${id}`)
       .then(res => {
+        let cleanedText = res.data.content.replace(/\n\s*([A-Za-z())\'\"]{1,6})\s*\n/g, ' $1 ');
+        res.data.content = cleanedText;
         setArticle(res.data);
         console.log(id)
+
       })
       .catch(err => {
         console.error("failed to fetch article", err);

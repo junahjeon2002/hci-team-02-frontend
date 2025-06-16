@@ -9,7 +9,7 @@ const IntensiveReadPage = () => {
   const { id } = useParams(); // 기사 ID를 URL에서 가져옴
   const [article, setArticle] = useState(null);  // API 응답 저장
   function highlightToHtml(text) {
-    const parts = text.split(/\[\[highlight\]\]|\[\[\/highlight\]\]/);
+    const parts = text.split(/\[\[highlight\]\]|\[\[\/highlight\]\]|\[\[\/highlight\]/);
     let result = '';
     for (let i = 0; i < parts.length; i++) {
       if (i % 2 === 1) {
@@ -29,10 +29,12 @@ const IntensiveReadPage = () => {
         // 1. article 본문 가져오기
         const articleRes = await axios.get(`http://3.36.74.61:8080/article/view/${id}`);
         const articleData = articleRes.data;
+        console.log("articleData", articleData.content);
 
         // 2. highlight된 버전 가져오기
         const highlightRes = await axios.get(`http://3.36.74.61:8080/article/highlight/${id}`);
         const highlightedText = highlightToHtml(highlightRes.data.highlighted);
+        console.log("highlightedText", highlightedText);
 
         // 3. highlight 내용을 article에 반영
         const updatedArticle = {
@@ -53,11 +55,6 @@ if (!article) {
     return <div>Loading...</div>;
   }
 
-  // "홈" 아이콘 클릭 시 메인 페이지로 이동
-  const handleGoHome = () => {
-    navigate('/'); // 메인 페이지 경로로 이동
-  };
-
   return (
     <div className="analog-card">
       {/* Top bar */}
@@ -65,7 +62,10 @@ if (!article) {
         <Link to="/">
           <img src="/home.svg" alt="홈" className="analog-homeicon" />
         </Link>
-        <img src="/VEWSLogo.svg" alt="VEWS" className="analog-vewslogo" />
+        <Link to="/">
+          <img src="/VEWSLogo.svg" alt="VEWS" className="analog-vewslogo" />
+        </Link>
+
       </div>
       {/* Title */}
       <div className="analog-title">{article.title}</div>
